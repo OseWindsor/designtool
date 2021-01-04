@@ -1,0 +1,126 @@
+<div id="shorttermmemoryspandiv"
+	data-ng-controller="shortTermMemorySpanController" class="container">
+<div id="stm_exp_section" class="row">
+		<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12"
+			style="background-color: #ddd;">
+			<!-- Section for choosing experiment parameters -->
+			<form>
+				<div class="form-group">
+					<label for="shortTermMemoryTrial">Number of Trials For Each (Between
+						1-10)</label> <input type="number" class="form-control"
+						id="shortTermMemoryTrial" data-ng-disabled="experiment_flag"
+						data-ng-model="exp_trial" placeholder="Enter number between 1-10">
+				</div>
+				<div class="form-group">
+					<label for="shortTermMemoryTimePeriod">Time Period in seconds (Between 5-60 seconds)</label>
+					<input type="number" class="form-control"
+						id="shortTermMemoryTimePeriod" data-ng-disabled="experiment_flag"
+						data-ng-model="exp_time_perd" placeholder="Enter number between 5-60">
+				</div>
+				<div class="form-group">
+					<label for="shortTermMemoryListLength">Max List Length (Between 5-13)</label>
+					<input type="number" class="form-control"
+						id="shortTermMemoryListLength" data-ng-disabled="experiment_flag"
+						data-ng-model="exp_memory_list_length" placeholder="Enter number between 1-10">
+				</div>
+
+			</form>
+			<button type="submit" class="btn btn-primary btn-block"
+				data-ng-disabled="experiment_flag || result_btn_flag"
+				data-ng-click="start_stm_experiment()">Start
+				Experiment</button>
+			<br>
+			<button type="button" class="btn btn-primary btn-block"
+				data-ng-disabled="experiment_flag"
+				data-ng-click="new_stm_experiment()">New Experiment</button>
+			<br>
+			<button type="button" class="btn btn-primary btn-block"
+				data-ng-disabled="!experiment_flag"
+				data-ng-click="exit_stm_experiment()">Exit
+				Experiment</button>
+			<br>
+			<div>
+				Current Trial: <span data-ng-model="exp_trial_left">{{current_trial}}/{{exp_trial}}</span>
+			</div>
+		</div>
+			<div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 ">
+			<h1 data-ng-show="show_info_text" class="text-center">{{stm_info_text}}</h1>
+			<div data-ng-show="show_mem_num_flag">
+			<input type="number" class="form-control" data-ng-disabled=true
+						id="memorize_num"
+						data-ng-model="memorize_num" placeholder="Enter number here">
+			</div>
+			<div data-ng-show="show_target">
+			<input type="number" class="form-control"
+						id="user_memorize_num"
+						data-ng-model="user_memorize_num" placeholder="Enter number here">
+			<br>
+			<button type="button" class="btn btn-primary btn-block"
+				data-ng-click="record_stm_experiment()">Answer</button>
+			</div>
+			<button type="button" data-ng-show="next_flag && show_info_text" class="btn btn-primary btn-block"
+				data-ng-click="next_stm_experiment()">Next</button>
+		</div>
+	</div>
+	
+		<div class="row">
+		<br>
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center"
+			style="background-color: #ddd;">
+			<div data-ng-hide="show_result_flag" class="sr_decision_section">
+				<p>The total number of trials is: (Number of Trials For Each)x(Max List Length - 4)</p>
+				<p>For example, If you select 9 as the Max List Length and 5 for each trial, you have the total number of trials of 25 (=5x(9-4))</p>
+			</div>
+			<div data-ng-show="show_result_flag" class="sr_result_section">
+				<p>Click on view result button to view the results of the
+					experiment</p>
+				<button type="button" data-ng-disabled="!show_result_flag"
+					data-ng-click="view_stm_result()" class="btn btn-success">View
+					Results</button>
+			</div>
+		</div>
+	</div>
+	
+		<!-- Modal to show results of experiment -->
+	<div class="modal fade" id="stm_result_Modal" tabindex="-1" role="dialog" aria-labelledby="stm_result_Modal_Label"
+		aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h2 class="modal-title" id="stm_result_Modal_Label">Experiment
+						Result</h2>
+				</div>
+				<div class="modal-body result-modal-body">
+					<!-- result table section inside modal starts here -->
+					<div class="table-responsive">
+						<table id="tblShortTermMemory" class="table table-bordered">
+							<thead>
+								<tr>
+									<th>Trial</th>
+									<th>System number</th>
+									<th>user input</th>
+									<th>response</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr data-ng-repeat="result in result_json">
+									<td>{{result.trial}}</td>
+									<td>{{result.asked_num}}</td>
+									<td>{{result.user_input_num}}</td>
+									<td>{{result.response}}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<!-- result table section inside modal close here -->
+				</div>
+				<div class="modal-footer">
+					<button type="button" value="export" class="btn btn-primary"
+						data-ng-click="export_results()" data-dismiss="modal">Download</button>
+					<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+</div>
