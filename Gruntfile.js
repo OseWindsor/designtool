@@ -17,8 +17,8 @@ var pkg = require('./package.json');
   // Automatically load required Grunt tasks
   require('jit-grunt')(grunt, {
     useminPrepare: 'grunt-usemin',
-    ngtemplates: 'grunt-angular-templates',
-    cdnify: 'grunt-google-cdn2'
+    ngtemplates: 'grunt-angular-templates'
+    //cdnify: 'grunt-google-cdn2'
   });
 
   // Configurable paths for the application
@@ -387,11 +387,11 @@ var pkg = require('./package.json');
     },
 
     // Replace Google CDN references
-    cdnify: {
+    /*cdnify: {
       dist: {
         html: ['<%= yeoman.dist %>/*.html']
       }
-    },
+    },*/
 
     // Copies remaining files to places other tasks can use
     copy: {
@@ -491,8 +491,8 @@ var pkg = require('./package.json');
     'concat',
     'ngAnnotate',
     'copy:dist',
-    'cdnify',
-   /* 'cssmin',
+    /* 'cdnify',
+   'cssmin',
     'uglify',*/
     'filerev',
     'usemin',
