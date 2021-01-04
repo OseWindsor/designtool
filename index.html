@@ -1,93 +1,105 @@
-<!doctype html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width">
-    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-    <!-- build:css(.) styles/vendor.css -->
-    <!-- bower:css -->
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
-    <!-- endbower -->
-    <!-- endbuild -->
-    <!-- build:css(.tmp) styles/main.css -->
-    <link rel="stylesheet" href="styles/main.css">
-    <!-- endbuild -->
-  </head>
-  <body ng-app="designtoolApp">
-    <!--[if lte IE 8]>
-      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-    <![endif]-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>OSE-ErgoPlus Design Tool</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<!-- <link rel="stylesheet" href="resources/css/bootstrap.min.css"> -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link href="styles/lato_css.css" rel="stylesheet" type="text/css">
+<link href="styles/Montserrat_css.css" rel="stylesheet"
+	type="text/css">
+<script src="scripts/jquery.min.js"></script>
+<script src="scripts/bootstrap.min.js"></script>
+<!--  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script> -->
+<script src="scripts/angular.min.js"></script>
 
-    <!-- Add your site or application content here -->
-    <div class="header">
-      <div class="navbar navbar-default" role="navigation">
-        <div class="container">
-          <div class="navbar-header">
+<script src="scripts/angular-route.js"></script>
 
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#js-navbar-collapse">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
+<script src="scripts/controllers/app.js"></script>
+<script src="scripts/controllers/visualinspectioncontroller.js"></script>
+<script src="scripts/controllers/choicereactiontimecontroller.js"></script>
+<script src="scripts/controllers/fittstappingcontroller.js"></script>
+<script src="scripts/controllers/learningcurvecontroller.js"></script>
+<script src="scripts/controllers/shorttermmemoryspancontroller.js"></script>
+<script src="scripts/controllers/simplereactiontimecontroller.js"></script>
+<script src="scripts/controllers/strooptestcontroller.js"></script>
+<script src="scripts/jquery.table2excel.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/regression/2.0.1/regression.min.js"></script>
+<!-- for drawing shapes in canvas -->
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/two.js/0.6.0/two.min.js"></script>
+<link type="text/css" rel="stylesheet"
+	href="styles/home_page_styles.css">
+</head>
+<body id="myPage" data-spy="scroll" data-target=".navbar"
+	data-offset="50" data-ng-app="design_Tool_App">
+	<!-- theme inspired from https://www.w3schools.com/bootstrap/tryit.asp?filename=trybs_theme_band_complete&stacked=h -->
+	<nav class="navbar navbar-default navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target="#myNavbar">
+					<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#home">Logo</a>
+			</div>
+			<div class="collapse navbar-collapse" id="myNavbar">
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="#home">HOME</a></li>
+					<li><a href="#about">About Us</a></li>
+					<li class="dropdown"><a class="dropdown-toggle"
+						data-toggle="dropdown">Apps <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a target="_blank" href="#visualinspection">Visual Inspection</a></li>
+							<li><a target="_blank" href="#fittstapping">Fitts’ Tapping Task</a></li>
+							<li><a target="_blank" href="#simplereactiontime">Simple Reaction Time</a></li>
+							<li><a target="_blank" href="#choicereactiontime">Choice Reaction Time</a></li>
+							<li><a target="_blank" href="#learningcurve">Learning curve</a></li>
+							<li><a  target="_blank" href="#shorttermmemoryspan">Short term memory
+									span</a></li>
+							<li><a target="_blank" href="#strooptest">Stroop Test</a></li>
+						</ul></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
 
-            <a class="navbar-brand" href="#/">designtool</a>
-          </div>
+	<!-- angular templating -->
+	<!-- this is where content will be injected -->
+	<div data-ng-view></div>
 
-          <div class="collapse navbar-collapse" id="js-navbar-collapse">
-
-            <ul class="nav navbar-nav">
-              <li class="active"><a href="#/">Home</a></li>
-              <li><a ng-href="#/about">About</a></li>
-              <li><a ng-href="#/">Contact</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="container">
-    <div ng-view=""></div>
-    </div>
-
-    <div class="footer">
-      <div class="container">
-        <p><span class="glyphicon glyphicon-heart"></span> from the Yeoman team</p>
-      </div>
-    </div>
+	<!-- Footer -->
 
 
-    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
-     <script>
-       !function(A,n,g,u,l,a,r){A.GoogleAnalyticsObject=l,A[l]=A[l]||function(){
-       (A[l].q=A[l].q||[]).push(arguments)},A[l].l=+new Date,a=n.createElement(g),
-       r=n.getElementsByTagName(g)[0],a.src=u,r.parentNode.insertBefore(a,r)
-       }(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	<footer>
+		<div class="container text-center">
+			<!--Grid row-->
+			<div class="row">
+				<!--Grid column-->
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+					<a class="up-arrow" onclick="go_top()" data-toggle="tooltip"> <span
+						class="glyphicon glyphicon-chevron-up"></span>
+					</a><br> <br>
+					<p>
+						Website Made By <a href="https://www.linkedin.com/in/gouravnayak/"
+							data-toggle="tooltip" title="Visit my linkedIN Profile">Gourav
+							Kumar Nayak</a>
+					</p>
+				</div>
+			</div>
+		</div>
+	</footer>
 
-       ga('create', 'UA-XXXXX-X');
-       ga('send', 'pageview');
-    </script>
+	<script>
+function go_top(){
+	document.body.scrollTop = 0;
+	document.documentElement.scrollTop = 0;
+}
+</script>
 
-    <!-- build:js(.) scripts/vendor.js -->
-    <!-- bower:js -->
-    <script src="bower_components/jquery/dist/jquery.js"></script>
-    <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="bower_components/angular-animate/angular-animate.js"></script>
-    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
-    <script src="bower_components/angular-resource/angular-resource.js"></script>
-    <script src="bower_components/angular-route/angular-route.js"></script>
-    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
-    <script src="bower_components/angular-touch/angular-touch.js"></script>
-    <!-- endbower -->
-    <!-- endbuild -->
-
-        <!-- build:js({.tmp,app}) scripts/scripts.js -->
-        <script src="scripts/app.js"></script>
-        <script src="scripts/controllers/main.js"></script>
-        <script src="scripts/controllers/about.js"></script>
-        <!-- endbuild -->
 </body>
 </html>
