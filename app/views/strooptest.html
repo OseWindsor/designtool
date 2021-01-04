@@ -1,0 +1,146 @@
+<div id="strooptestdiv"
+	data-ng-controller="stroopTestController" class="container">
+	<div id ="stexpsection" class="row">
+	<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12"
+			style="background-color: #ddd;">
+			<!-- Section for choosing experiment parameters -->
+			<form>
+				<div class="form-group">
+					<label for="stroopTestTrial">Number of Trials (Between
+						1-100)</label> <input type="number" class="form-control"
+						id="stroopTestTrial" data-ng-disabled="experiment_flag"
+						data-ng-model="exp_trial" placeholder="Enter number between 1-100">
+				</div>
+
+				<div class="form-group">
+					<label for="strooptestcondition">Select Condition</label> 
+					<select class="form-control" id="strooptestcondition"
+						data-ng-disabled="experiment_flag"
+						data-ng-change="target_condition()"
+						data-ng-model="strooptargetcondition"
+						data-ng-options="stroop_target_condition.value for stroop_target_condition in stroop_target_condition_array"
+						name="strooptestcondition">
+					</select>
+				</div>
+
+			</form>
+			<button type="submit" class="btn btn-primary btn-block"
+				data-ng-disabled="experiment_flag || result_btn_flag"
+				data-ng-click="start_st_experiment()">Start
+				Experiment</button>
+			<br>
+			<button type="button" class="btn btn-primary btn-block"
+				data-ng-disabled="experiment_flag"
+				data-ng-click="new_st_experiment()">New Experiment</button>
+			<br>
+			<button type="button" class="btn btn-primary btn-block"
+				data-ng-disabled="!experiment_flag"
+				data-ng-click="exit_st_experiment()">Exit
+				Experiment</button>
+			<br>
+			<div>
+				Current Trial: <span data-ng-model="exp_trial_left">{{current_trial}}/{{exp_trial}}</span>
+			</div>
+		</div>
+			<div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 ">
+			<h1 data-ng-show="show_info_text" class="text-center">{{strooptargetcondition.value}}</h1>
+			<p data-ng-show="show_info_text">{{sr_info_text}}</p>
+			<div class="text-center" data-ng-if="show_info_text && strooptargetcondition.id===1">
+				<p><span class="tab" style="color:red;">red</span><span class="tab" style="color:aqua;">aqua</span>
+				<span class="tab" style="color:green;">green</span>
+				<span style="color:blue;">blue</span></p>
+			</div>
+			<div class="text-center" data-ng-if="show_info_text && strooptargetcondition.id===2">
+				<p><span class="tab" style="color:aqua;">red</span><span class="tab" style="color:green;">aqua</span>
+				<span class="tab" style="color:blue;">green</span>
+				<span style="color:red;">blue</span></p>
+			</div>
+			<div class="text-center" data-ng-if="show_info_text && strooptargetcondition.id===3">
+				<p><span class="tab" style="color:red;">der</span><span class="tab" style="color:aqua;">uaqa</span>
+				<span class="tab" style="color:green;">nerge</span>
+				<span style="color:blue;">elub</span></p>
+			</div>
+			<div class="text-center" data-ng-if="show_info_text && strooptargetcondition.id===4">
+				<p><span class="tab" style="color:aqua;">der</span><span class="tab" style="color:green;">uaqa</span>
+				<span class="tab" style="color:blue;">nerge</span>
+				<span style="color:red;">elub</span></p>
+			</div>
+			<div data-ng-show="show_result_flag"><h1>Experiment is completed. Click on view result button to see the results.</h1></div>
+			<div data-ng-show="show_target" id="target_text_color">{{st_target_text}}</div>
+		</div>
+	</div>
+	
+		<div class="row">
+		<br>
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center"
+			style="background-color: #ddd;">
+			<div data-ng-hide="show_result_flag" class="sr_decision_section">
+				<p>Press the button with color that matches your response or press the shortcut key.</p>
+				<button id="action_response_1" type="button" data-ng-disabled="!experiment_flag || !wait_for_st_flag"
+					data-ng-click="action_response('Z')" style="width: 85px; background-color:red;"
+					class="btn btn-success">RED / z</button>
+					<button id="action_response_2" type="button" data-ng-disabled="!experiment_flag || !wait_for_st_flag"
+					data-ng-click="action_response('X')" style="width: 85px; background-color:aqua;"
+					class="btn btn-success">AQUA / x</button>
+					<button id="action_response_3" type="button" data-ng-disabled="!experiment_flag || !wait_for_st_flag"
+					data-ng-click="action_response('C')" style="width: 85px; background-color:blue;"
+					class="btn btn-success">BLUE / c</button>
+					<button id="action_response_4" type="button" data-ng-disabled="!experiment_flag || !wait_for_st_flag"
+					data-ng-click="action_response('V')" style="width: 85px; background-color:green;"
+					class="btn btn-success">GREEN / v</button>
+			</div>
+			<div data-ng-show="show_result_flag" class="sr_result_section">
+				<p>Click on view result button to view the results of the
+					experiment</p>
+				<button type="button" data-ng-disabled="!show_result_flag"
+					data-ng-click=view_st_result() class="btn btn-success">View
+					Result</button>
+			</div>
+		</div>
+	</div>
+	
+		<!-- Modal to show results of experiment -->
+	<div class="modal fade" id="st_result_Modal" tabindex="-1" role="dialog" aria-labelledby="st_result_Modal_Label"
+		aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h2 class="modal-title" id="st_result_Modal_Label">Experiment
+						Result</h2>
+				</div>
+				<div class="modal-body result-modal-body">
+					<!-- result table section inside modal starts here -->
+					<div class="table-responsive">
+						<table id="tblStroopTest" class="table table-bordered">
+							<thead>
+								<tr>
+									<th>Trial</th>
+									<th>Stimulus</th>
+									<th>response</th>
+									<th>error</th>
+									<th>response time</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr data-ng-repeat="result in result_json">
+									<td>{{result.trial}}</td>
+									<td>{{result.stimulus}}</td>
+									<td>{{result.response}}</td>
+									<td>{{result.error}}</td>
+									<td>{{result.response_time}} seconds</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<!-- result table section inside modal close here -->
+				</div>
+				<div class="modal-footer">
+					<button type="button" value="export" class="btn btn-primary"
+						data-ng-click="export_results()" data-dismiss="modal">Download</button>
+					<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+</div>

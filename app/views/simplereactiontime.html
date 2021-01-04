@@ -1,0 +1,129 @@
+<div id="simplereactiontimediv"
+	data-ng-controller="simplereactionTimeController" class="container">
+	<div id="srt_exp_section" class="row">
+		<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12"
+			style="background-color: #ddd;">
+			<!-- Section for choosing experiment parameters -->
+			<form>
+				<div class="form-group">
+					<label for="simpleReactionTrial">Number of Trials (Between
+						1-100)</label> <input type="number" class="form-control"
+						id="simpleReactionTrial" data-ng-disabled="experiment_flag"
+						data-ng-model="exp_trial" placeholder="Enter number between 1-100">
+				</div>
+
+				<div class="form-group">
+					<label for="simpleReactionTargetColor">Select Target Color</label>
+
+					<div class="form-check">
+						<input class="form-input" type="radio"
+							data-ng-disabled="experiment_flag"
+							data-ng-model="target_color.name"
+							data-ng-change="create_target()"
+							name="simpleReactionTargetColor" id="targetColor1" value="red">
+						<label class="form-check-label" for="targetColor1">Red</label>
+					</div>
+
+					<div class="form-check">
+						<input class="form-input" type="radio"
+							data-ng-disabled="experiment_flag"
+							data-ng-model="target_color.name"
+							data-ng-change="create_target()"
+							name="simpleReactionTargetColor" id="targetColor2" value="blue">
+						<label class="form-check-label" for="targetColor2">Blue</label>
+					</div>
+
+					<div class="form-check">
+						<input class="form-input" type="radio"
+							data-ng-disabled="experiment_flag"
+							data-ng-model="target_color.name"
+							data-ng-change="create_target()"
+							name="simpleReactionTargetColor" id="targetColor3" value="green">
+						<label class="form-check-label" for="targetColor3">Green</label>
+					</div>
+				</div>
+
+			</form>
+			<button type="submit" class="btn btn-primary btn-block"
+				data-ng-disabled="experiment_flag || result_btn_flag"
+				data-ng-click="start_sr_experiment()">Start
+				Experiment</button>
+			<br>
+			<button type="button" class="btn btn-primary btn-block"
+				data-ng-disabled="experiment_flag"
+				data-ng-click="new_sr_experiment()">New Experiment</button>
+			<br>
+			<button type="button" class="btn btn-primary btn-block"
+				data-ng-disabled="!experiment_flag"
+				data-ng-click="exit_sr_experiment()">Exit
+				Experiment</button>
+			<br>
+			<div>
+				Current Trial: <span data-ng-model="exp_trial_left">{{current_trial}}/{{exp_trial}}</span>
+			</div>
+		</div>
+			<div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 ">
+			<h1 data-ng-show="show_info_text" class="text-center">{{sr_info_text}}</h1>
+			<div style="float:left;" class="circle" data-ng-show="show_target" id="circle_target"></div>
+		</div>
+	</div>
+	
+		<div class="row">
+		<br>
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center"
+			style="background-color: #ddd;">
+			<div data-ng-hide="show_result_flag" class="sr_decision_section">
+				<p>Press "z" key OR click "response" button below to respond</p>
+				<button id="action_response" type="button" data-ng-disabled="!experiment_flag || !wait_for_sr_flag"
+					data-ng-click=action_response() style="width: 78px"
+					class="btn btn-success">Response</button>
+			</div>
+			<div data-ng-show="show_result_flag" class="sr_result_section">
+				<p>Click on view result button to view the results of the
+					experiment</p>
+				<button type="button" data-ng-disabled="!show_result_flag"
+					data-ng-click=view_sr_result() class="btn btn-success">View
+					Results</button>
+			</div>
+		</div>
+	</div>
+	
+		<!-- Modal to show results of experiment -->
+	<div class="modal fade" id="sr_result_Modal" tabindex="-1" role="dialog" aria-labelledby="sr_result_Modal_Label"
+		aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h2 class="modal-title" id="sr_result_Modal_Label">Experiment
+						Result</h2>
+				</div>
+				<div class="modal-body result-modal-body">
+					<!-- result table section inside modal starts here -->
+					<div class="table-responsive">
+						<table id="tblSimpleReaction" class="table table-bordered">
+							<thead>
+								<tr>
+									<th>Trial</th>
+									<th>response time</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr data-ng-repeat="result in result_json">
+									<td>{{result.trial}}</td>
+									<td>{{result.response_time}} seconds</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<!-- result table section inside modal close here -->
+				</div>
+				<div class="modal-footer">
+					<button type="button" value="export" class="btn btn-primary"
+						data-ng-click="export_results()" data-dismiss="modal">Download</button>
+					<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+</div>

@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name designtoolApp.controller:MainCtrl
+ * @name oseErgoPlusDesignApp.controller:MainCtrl
  * @description
  * # MainCtrl
- * Controller of the designtoolApp
+ * Controller of the oseErgoPlusDesignApp
  */
-angular.module('designtoolApp')
+angular.module('oseErgoPlusDesignApp')
   .controller('MainCtrl', function () {
     this.awesomeThings = [
       'HTML5 Boilerplate',

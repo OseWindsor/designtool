@@ -2,16 +2,18 @@
 
 /**
  * @ngdoc overview
- * @name designtoolApp
+ * @name oseErgoPlusDesignApp
  * @description
- * # designtoolApp
+ * # oseErgoPlusDesignApp
  *
  * Main module of the application.
  */
 angular
-  .module('designtoolApp', [
+  .module('oseErgoPlusDesignApp', [
     'ngAnimate',
+    'ngAria',
     'ngCookies',
+    'ngMessages',
     'ngResource',
     'ngRoute',
     'ngSanitize',
