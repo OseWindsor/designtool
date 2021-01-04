@@ -1,0 +1,8 @@
+Step 1: Clone the git repository in your local directory.
+Step 2: make the necessary changes.
+Step 3: add all the file ready for commit. Command: git add *
+Step 4: commit the change in the master branch with the comment. git commit -m "initial readme commit"
+Step 5: Create a new remote with name origin or your choice. git remote add origin https://github.com/OseWindsor/designtool.git
+Step 6: Push the changes of your remote to the master branch. git push origin master
+
+Refresh the repostiry in github and you must be able to view changes then.
